@@ -128,7 +128,7 @@ sudo -i
   tags:
     - auditd-configuration
 ```
-## Настройка лог сервера (Разоб плэйбука)
+## Настройка лог сервера (Разбор плэйбука)
 Также настраиваем временную зону:
 ```
 - name: LOG-SERVER | set timezone to Asia/Bishkek
