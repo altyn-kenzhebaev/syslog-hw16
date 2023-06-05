@@ -1,4 +1,4 @@
-# PAM
+# Syslog, ELK, Logstash
 Для выполнения этого действия требуется установить приложением git:
 `git clone https://github.com/altyn-kenzhebaev/syslog-hw16.git`
 В текущей директории появится папка с именем репозитория. В данном случае syslog-hw16. Ознакомимся с содержимым:
