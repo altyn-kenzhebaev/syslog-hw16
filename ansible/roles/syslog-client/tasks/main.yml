@@ -1,0 +1,94 @@
+- name: SYSLOG-CLIENT | Set timezone to Asia/Bishkek
+  timezone:
+    name: Asia/Bishkek
+  tags:
+    - timezone-configuration
+
+- name: SYSLOG-CLIENT | Install NGINX, audispd-plugins package
+  yum:
+    name: 
+     - nginx
+     - audispd-plugins 
+    state: latest
+  notify:
+    - restart nginx
+    - restart auditd
+  tags:
+    - nginx-package
+    - audispd-plugins-package
+    - packages
+
+- name: SYSLOG-CLIENT | Create NGINX config file from template
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify:
+    - reload nginx
+  tags:
+    - nginx-configuration
+
+- name: SYSLOG-CLIENT | Append json-template to rsyslog
+  copy:
+    dest: /etc/rsyslog.d/json-template.conf
+    src: json-template.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart rsyslog
+  tags:
+    - rsyslog-configuration
+
+- name: SYSLOG-CLIENT | Configure to send logs
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+  notify:
+    - restart rsyslog
+  tags:
+    - rsyslog-configuration
+
+- name: SYSLOG-CLIENT | Configure AUDITD rules
+  copy:
+    dest: /etc/audit/audit.rules
+    src: audit.rules
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - restart auditd
+  tags:
+    - auditd-configuration
+
+- name: SYSLOG-CLIENT | Configure AUDITD
+  copy:
+    dest: /etc/audit/auditd.conf
+    src: auditd.conf
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - restart auditd
+  tags:
+    - auditd-configuration
+
+- name: SYSLOG-CLIENT | Configure AUDITD plugin to send auditd logs
+  copy:
+    dest: /etc/audit/plugins.d/au-remote.conf
+    src: au-remote.conf
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - restart auditd
+  tags:
+    - auditd-configuration
+
+- name: SYSLOG-CLIENT | Configure to send audit logs
+  template:
+    src: audisp-remote.conf.j2
+    dest: /etc/audit/audisp-remote.conf
+  notify:
+    - restart auditd
+  tags:
+    - auditd-configuration

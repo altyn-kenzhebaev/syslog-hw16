@@ -1,0 +1,8 @@
+---
+- name: LOG-SERVER | Configure RSYSLOG to recieve syslogs
+  hosts: log
+  gather_facts: no
+  become: true
+  roles:
+    - log-server
+...

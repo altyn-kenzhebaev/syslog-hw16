@@ -1,0 +1,7 @@
+- name: restart rsyslog
+  systemd:
+    name: rsyslog
+    state: restarted
+
+- name: restart auditd
+  command: /usr/sbin/service auditd restart

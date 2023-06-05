@@ -1,0 +1,9 @@
+---
+- name: ELK-SERVER
+  hosts: elk
+  gather_facts: no
+  become: true
+  tasks:
+  - name: ELK-SERVER | Ping server
+    ansible.builtin.ping:
+...

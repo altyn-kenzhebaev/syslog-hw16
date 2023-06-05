@@ -1,0 +1,29 @@
+- name: LOG-SERVER | set timezone to Asia/Bishkek
+  timezone:
+    name: Asia/Bishkek
+  tags:
+    - timezone-configuration
+
+- name: LOG-SERVER | Configure RSYSLOG to recieve logs
+  copy:
+    dest: /etc/rsyslog.conf
+    src: rsyslog.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart rsyslog
+  tags:
+    - rsyslog-configuration
+
+- name: LOG-SERVER | Configure auditd to recieve audit logs
+  copy:
+    dest: /etc/audit/auditd.conf
+    src: auditd.conf
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - restart auditd
+  tags:
+    - auditd-configuration
